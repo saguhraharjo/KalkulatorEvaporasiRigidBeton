@@ -190,33 +190,33 @@
       <button type="button" class="modal-close" id="infoModalClose" aria-label="Tutup">✕</button>
       <h3 id="infoModalTitle">Dasar & Detail Perhitungan</h3>
 
-      <h4>Kenapa ini penting?</h4>
-      <p>Saat beton segar dicor di cuaca panas, angin kencang, atau udara kering, air di permukaan beton bisa menguap lebih cepat daripada air yang naik dari dalam beton (bleeding). Kalau ini terjadi, permukaan beton mengering dan menyusut duluan sementara bagian dalamnya belum, sehingga muncul <b>retak susut plastis</b> — retak halus yang muncul dalam beberapa jam pertama setelah pengecoran. Kalkulator ini membantu memperkirakan seberapa besar risiko itu, sebelum pengecoran dimulai.</p>
+      <h4>Latar Belakang</h4>
+      <p>Pengecoran pada kondisi cuaca panas (suhu udara tinggi, kelembaban rendah, dan/atau kecepatan angin tinggi) berpotensi menyebabkan laju penguapan air pada permukaan beton segar melebihi laju <i>bleeding</i> (naiknya air dari dalam campuran ke permukaan). Kondisi ini menyebabkan permukaan beton mengalami pengeringan dan penyusutan lebih cepat dibanding bagian dalamnya, sehingga timbul tegangan tarik pada lapisan permukaan yang berpotensi memicu <b>retak susut plastis (plastic shrinkage cracking)</b> pada jam-jam awal setelah pengecoran. Kalkulator ini digunakan sebagai alat bantu estimasi risiko tersebut sebelum pelaksanaan pengecoran di lapangan.</p>
 
-      <h4>Dasar acuan</h4>
-      <p>Perhitungan mengacu pada <b>ACI 305R — Guide to Hot Weather Concreting</b>, sebuah panduan dari American Concrete Institute (ACI) yang menjadi standar umum dunia untuk pengecoran di cuaca panas. Di dalamnya terdapat nomogram (grafik acuan) yang disusun oleh <b>Menzel (1954)</b> untuk mengestimasi laju penguapan air permukaan beton, berdasarkan pengamatan empiris di lapangan.</p>
+      <h4>Dasar Acuan</h4>
+      <p>Perhitungan mengacu pada <b>ACI 305R — Guide to Hot Weather Concreting</b>, pedoman American Concrete Institute (ACI) yang menjadi referensi umum untuk pelaksanaan pekerjaan beton pada cuaca panas. Estimasi laju penguapan menggunakan pendekatan nomogram yang dikembangkan oleh <b>Menzel (1954)</b>, berdasarkan hubungan empiris antara suhu udara, suhu beton, kelembaban relatif, dan kecepatan angin.</p>
 
-      <h4>Rumusnya</h4>
+      <h4>Persamaan yang Digunakan</h4>
       <div class="formula-box">E = 5 · [ (Tc+18)<sup>2.5</sup> − (RH/100)·(Ta+18)<sup>2.5</sup> ] · (V+4) · 10⁻⁶</div>
       <ul>
-        <li><b>E</b> — Laju penguapan air permukaan beton (kg/m² per jam). Ini hasil akhir yang mau dicari.</li>
-        <li><b>Ta</b> — Suhu udara di sekitar lokasi cor (°C).</li>
-        <li><b>RH</b> — Kelembaban relatif udara (%). Makin kering udara, makin cepat air menguap.</li>
-        <li><b>Tc</b> — Suhu beton segar saat dicor (°C). Dibatasi maksimal 35°C sesuai syarat mutu beton rigid pada proyek ini.</li>
-        <li><b>V</b> — Kecepatan angin di lokasi cor (km/jam). Angin mempercepat penguapan.</li>
+        <li><b>E</b> — Laju penguapan air permukaan beton (kg/m² per jam), merupakan parameter keluaran utama.</li>
+        <li><b>Ta</b> — Suhu udara ambien di lokasi pengecoran (°C).</li>
+        <li><b>RH</b> — Kelembaban relatif udara (%); semakin rendah RH, semakin besar potensi penguapan.</li>
+        <li><b>Tc</b> — Suhu beton segar saat pengecoran (°C), dibatasi maksimal 35°C sesuai persyaratan mutu beton rigid pada proyek ini.</li>
+        <li><b>V</b> — Kecepatan angin di lokasi pengecoran (km/jam), berbanding lurus dengan percepatan laju penguapan.</li>
       </ul>
-      <p class="dim">Secara sederhana: rumus ini membandingkan "tekanan uap air" di permukaan beton yang panas (dipengaruhi Tc) dengan "tekanan uap air" di udara sekitar (dipengaruhi Ta dan RH). Semakin besar selisihnya, dan semakin kencang anginnya, semakin cepat air di permukaan beton menguap.</p>
+      <p class="dim">Suku (Tc+18)<sup>2.5</sup> dan (Ta+18)<sup>2.5</sup> merupakan pendekatan empiris terhadap tekanan uap jenuh pada suhu beton dan suhu udara. Selisih keduanya mencerminkan gradien tekanan uap yang mendorong terjadinya penguapan; faktor (V+4) merepresentasikan pengaruh pergerakan udara terhadap percepatan proses tersebut.</p>
 
-      <h4>Cara membaca grafik nomogram</h4>
-      <p>Grafik kiri (Panel A) menunjukkan hubungan suhu udara dan kelembaban terhadap acuan suhu beton. Garis biru menarik dari suhu udara ke atas, lalu garis oranye menarik mendatar ke kanan — ini meniru cara pembacaan nomogram klasik ACI 305R secara manual. Grafik kanan (Panel B) menunjukkan bagaimana kecepatan angin memengaruhi laju penguapan akhir (E), dengan garis merah putus-putus menandai ambang batas aman.</p>
+      <h4>Interpretasi Grafik Nomogram</h4>
+      <p>Panel A menunjukkan hubungan suhu udara dan kelembaban relatif terhadap acuan suhu beton, mengikuti kaidah pembacaan nomogram konvensional ACI 305R — garis biru vertikal pada nilai suhu udara, dilanjutkan garis horizontal ke arah kanan. Panel B menunjukkan pengaruh kecepatan angin terhadap laju penguapan (E) pada kondisi selisih tekanan uap yang berlaku saat itu, dengan garis putus-putus merah sebagai penanda ambang batas.</p>
 
-      <h4>Ambang batas aman</h4>
-      <p>Nilai default batas aman adalah <b>1,0 kg/m²/jam</b>, sesuai rekomendasi umum ACI 305R. Jika laju penguapan (E) mendekati atau melebihi angka ini, risiko retak susut plastis dianggap tinggi dan perlu tindakan pencegahan seperti wind break, sun shade (naungan), evaporation retarder (bahan penahan penguapan), atau curing sesegera mungkin setelah proses finishing.</p>
+      <h4>Ambang Batas Aman</h4>
+      <p>Nilai ambang batas default sebesar <b>1,0 kg/m²/jam</b> mengacu pada rekomendasi umum ACI 305R sebagai batas indikatif risiko retak susut plastis. Apabila laju penguapan (E) mendekati atau melampaui nilai ini, disarankan tindakan mitigasi seperti pemasangan <i>wind break</i>, <i>sun shade</i>, aplikasi <i>evaporation retarder</i>, atau percepatan proses <i>curing</i> segera setelah tahap finishing.</p>
 
-      <div class="threshold-note">Catatan: maksimal suhu beton (Tc) rigid beton pada proyek ini dibatasi 35 °C. Batas ini bukan bagian dari rumus Menzel itu sendiri, melainkan syarat mutu tambahan yang diterapkan pada kalkulator ini agar suhu beton saat dicor tidak melebihi ambang yang ditetapkan.</div>
+      <div class="threshold-note">Catatan: pembatasan suhu beton (Tc) maksimal 35°C merupakan persyaratan mutu tambahan yang diterapkan pada kalkulator ini untuk pekerjaan rigid pavement, bukan bagian intrinsik dari persamaan Menzel.</div>
 
       <hr class="divider">
-      <p class="dim">Kalkulator ini adalah alat bantu estimasi cepat di lapangan, bukan pengganti kaji teknis oleh insinyur bila kondisi di lokasi meragukan.</p>
+      <p class="dim">Kalkulator ini berfungsi sebagai alat bantu estimasi cepat di lapangan dan tidak menggantikan kajian teknis lebih lanjut oleh tenaga ahli apabila kondisi aktual di lokasi meragukan.</p>
     </div>
   </div>
 
