@@ -108,6 +108,59 @@
 
   footer{margin-top:24px;font-size:11.5px;color:var(--sub);text-align:center;font-family:'IBM Plex Mono',monospace;}
   footer a{color:var(--amber);}
+
+  /* Info button */
+  .info-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    background:rgba(232,163,61,.12);border:1px solid var(--amber);color:var(--amber);
+    font-family:'IBM Plex Sans',sans-serif;font-size:12.5px;font-weight:600;
+    padding:8px 14px;border-radius:8px;cursor:pointer;white-space:nowrap;
+    transition:background .15s ease;
+  }
+  .info-btn:hover{background:rgba(232,163,61,.22);}
+  .info-btn .ic{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;
+    width:18px;height:18px;border-radius:50%;border:1.5px solid var(--amber);
+    display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;}
+
+  /* Modal */
+  .modal-overlay{
+    display:none;position:fixed;inset:0;background:rgba(6,11,17,.72);
+    z-index:100;padding:24px 16px;overflow-y:auto;
+    -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+  }
+  .modal-overlay.open{display:flex;align-items:flex-start;justify-content:center;}
+  .modal-box{
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));
+    border:1px solid var(--grid);border-radius:14px;max-width:720px;width:100%;
+    margin:20px auto;padding:22px 24px 26px;position:relative;
+    box-shadow:0 20px 60px rgba(0,0,0,.5);
+  }
+  .modal-box h3{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin:0 0 4px;color:var(--ink);}
+  .modal-box .modal-sub{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--amber);
+    letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;}
+  .modal-close{
+    position:absolute;top:14px;right:14px;background:transparent;border:1px solid var(--grid);
+    color:var(--sub);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:16px;line-height:1;
+  }
+  .modal-close:hover{color:var(--ink);border-color:var(--sub);}
+  .modal-box h4{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--teal);
+    margin:18px 0 8px;}
+  .modal-box h4:first-of-type{margin-top:4px;}
+  .modal-box p{font-size:13.5px;line-height:1.65;color:var(--ink);margin:0 0 10px;}
+  .modal-box p.dim{color:var(--sub);font-size:12.5px;}
+  .modal-box ul{margin:0 0 10px;padding-left:18px;}
+  .modal-box li{font-size:13.5px;line-height:1.65;color:var(--ink);margin-bottom:6px;}
+  .modal-box li b{color:var(--amber);}
+  .formula-box{
+    background:#0E1A26;border:1px solid var(--grid);border-radius:10px;padding:14px 16px;
+    font-family:'IBM Plex Mono',monospace;font-size:13.5px;color:var(--teal);text-align:center;
+    margin:10px 0 14px;line-height:1.7;overflow-x:auto;
+  }
+  .modal-box .divider{border:none;border-top:1px solid var(--grid);margin:16px 0;}
+  .modal-box .threshold-note{
+    background:rgba(63,199,168,.10);border:1px solid rgba(63,199,168,.35);border-radius:8px;
+    padding:10px 12px;font-size:12.5px;color:var(--teal);line-height:1.6;margin-top:6px;
+  }
 </style>
 </head>
 <body>
@@ -124,6 +177,48 @@
     </div>
     <div class="src">Berdasarkan nomogram evaporasi Menzel (1954). Rumus: E = 5·[(Tc+18)<sup>2.5</sup> − RH·(Ta+18)<sup>2.5</sup>]·(V+4)·10⁻⁶</div>
   </header>
+
+  <div style="display:flex;justify-content:flex-end;margin:-8px 0 18px;">
+    <button type="button" id="infoBtn" class="info-btn" aria-haspopup="dialog" aria-controls="infoModal">
+      <span class="ic">i</span> Dasar Perhitungan
+    </button>
+  </div>
+
+  <!-- MODAL: Dasar & Detail Perhitungan -->
+  <div class="modal-overlay" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+    <div class="modal-box">
+      <button type="button" class="modal-close" id="infoModalClose" aria-label="Tutup">✕</button>
+      <h3 id="infoModalTitle">Dasar & Detail Perhitungan</h3>
+
+      <h4>Kenapa ini penting?</h4>
+      <p>Saat beton segar dicor di cuaca panas, angin kencang, atau udara kering, air di permukaan beton bisa menguap lebih cepat daripada air yang naik dari dalam beton (bleeding). Kalau ini terjadi, permukaan beton mengering dan menyusut duluan sementara bagian dalamnya belum, sehingga muncul <b>retak susut plastis</b> — retak halus yang muncul dalam beberapa jam pertama setelah pengecoran. Kalkulator ini membantu memperkirakan seberapa besar risiko itu, sebelum pengecoran dimulai.</p>
+
+      <h4>Dasar acuan</h4>
+      <p>Perhitungan mengacu pada <b>ACI 305R — Guide to Hot Weather Concreting</b>, sebuah panduan dari American Concrete Institute (ACI) yang menjadi standar umum dunia untuk pengecoran di cuaca panas. Di dalamnya terdapat nomogram (grafik acuan) yang disusun oleh <b>Menzel (1954)</b> untuk mengestimasi laju penguapan air permukaan beton, berdasarkan pengamatan empiris di lapangan.</p>
+
+      <h4>Rumusnya</h4>
+      <div class="formula-box">E = 5 · [ (Tc+18)<sup>2.5</sup> − (RH/100)·(Ta+18)<sup>2.5</sup> ] · (V+4) · 10⁻⁶</div>
+      <ul>
+        <li><b>E</b> — Laju penguapan air permukaan beton (kg/m² per jam). Ini hasil akhir yang mau dicari.</li>
+        <li><b>Ta</b> — Suhu udara di sekitar lokasi cor (°C).</li>
+        <li><b>RH</b> — Kelembaban relatif udara (%). Makin kering udara, makin cepat air menguap.</li>
+        <li><b>Tc</b> — Suhu beton segar saat dicor (°C). Dibatasi maksimal 35°C sesuai syarat mutu beton rigid pada proyek ini.</li>
+        <li><b>V</b> — Kecepatan angin di lokasi cor (km/jam). Angin mempercepat penguapan.</li>
+      </ul>
+      <p class="dim">Secara sederhana: rumus ini membandingkan "tekanan uap air" di permukaan beton yang panas (dipengaruhi Tc) dengan "tekanan uap air" di udara sekitar (dipengaruhi Ta dan RH). Semakin besar selisihnya, dan semakin kencang anginnya, semakin cepat air di permukaan beton menguap.</p>
+
+      <h4>Cara membaca grafik nomogram</h4>
+      <p>Grafik kiri (Panel A) menunjukkan hubungan suhu udara dan kelembaban terhadap acuan suhu beton. Garis biru menarik dari suhu udara ke atas, lalu garis oranye menarik mendatar ke kanan — ini meniru cara pembacaan nomogram klasik ACI 305R secara manual. Grafik kanan (Panel B) menunjukkan bagaimana kecepatan angin memengaruhi laju penguapan akhir (E), dengan garis merah putus-putus menandai ambang batas aman.</p>
+
+      <h4>Ambang batas aman</h4>
+      <p>Nilai default batas aman adalah <b>1,0 kg/m²/jam</b>, sesuai rekomendasi umum ACI 305R. Jika laju penguapan (E) mendekati atau melebihi angka ini, risiko retak susut plastis dianggap tinggi dan perlu tindakan pencegahan seperti wind break, sun shade (naungan), evaporation retarder (bahan penahan penguapan), atau curing sesegera mungkin setelah proses finishing.</p>
+
+      <div class="threshold-note">Catatan: maksimal suhu beton (Tc) rigid beton pada proyek ini dibatasi 35 °C. Batas ini bukan bagian dari rumus Menzel itu sendiri, melainkan syarat mutu tambahan yang diterapkan pada kalkulator ini agar suhu beton saat dicor tidak melebihi ambang yang ditetapkan.</div>
+
+      <hr class="divider">
+      <p class="dim">Kalkulator ini adalah alat bantu estimasi cepat di lapangan, bukan pengganti kaji teknis oleh insinyur bila kondisi di lokasi meragukan.</p>
+    </div>
+  </div>
 
   <div class="grid">
 
@@ -156,10 +251,11 @@
       <div class="field">
         <label>Suhu Beton (Tc) <span class="val" id="valTc">34 °C</span></label>
         <div class="field-num">
-          <input type="range" id="Tc" min="5" max="40" step="0.01" value="34">
-          <input type="text" id="Tc_n" data-min="5" data-max="40" value="34" inputmode="decimal" autocomplete="off">
+          <input type="range" id="Tc" min="5" max="35" step="0.01" value="34">
+          <input type="text" id="Tc_n" data-min="5" data-max="35" value="34" inputmode="decimal" autocomplete="off">
           <span class="unit-tag">°C</span>
         </div>
+        <div class="note" style="margin-top:6px;">Maksimal suhu beton (Tc) rigid beton adalah 35 °C.</div>
       </div>
       <div class="field">
         <label>Kecepatan Angin (V) <span class="val" id="valV">20 km/jam</span></label>
@@ -395,6 +491,20 @@ function draw(){
 }
 
 draw();
+
+// ---- Modal: Dasar & Detail Perhitungan ----
+(function(){
+  const btn = $('infoBtn');
+  const modal = $('infoModal');
+  const closeBtn = $('infoModalClose');
+  function openModal(){ modal.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeModal(){ modal.classList.remove('open'); document.body.style.overflow=''; }
+  btn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e)=>{ if(e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+})();
 </script>
+
 </body>
 </html>
